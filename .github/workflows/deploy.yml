@@ -36,8 +36,7 @@ jobs:
 
       - name: Build
         env:
-          # /<repo>/ so assets load correctly on GitHub Pages project sites
-          BASE_PATH: /${{ github.event.repository.name }}/
+          BASE_PATH: /
         run: npm run build
 
       - name: Setup Pages
