@@ -23,10 +23,9 @@ It is impossible to simply ignore such a catastrophe, and talking about other to
 This project is a reflection on creativity in conditions of absolute silence: can we express what we do not want to talk about, and does it have value as a kind of testimony?`
     },
     scrollHint: {
-      ua: "Гортайте вниз, щоб\nпобачити роботи",
-      en: "Scroll down to\nsee the works"
-    }
-  },
+    ua: "Проєкти",
+    en: "Projects"
+  }},
 
   about: {
     portrait: "images/nadja_kelm.jpg",
