@@ -17,7 +17,7 @@ export function renderHome({ lightbox }) {
   const hint = document.createElement("button");
   hint.type = "button";
   hint.className = "home-intro__hint";
-  hint.innerHTML = `<div class="home-intro__arrow">↓</div><div class="home-intro__hintText"></div>`;
+  hint.innerHTML = `<div class="home-intro__hintText"></div><div class="home-intro__arrow">↓</div>`;
 
   hint.querySelector(".home-intro__hintText").textContent = t(siteData.home.scrollHint);
 
