@@ -21,7 +21,7 @@ export function renderContacts() {
   linkedin.href = siteData.contacts.linkedin;
   linkedin.target = "_blank";
   linkedin.rel = "noreferrer";
-  linkedin.textContent = siteData.contacts.linkedin;
+  linkedin.textContent = "LinkedIn";
 
   box.append(line, email, linkedin);
   main.append(box);
