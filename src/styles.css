@@ -270,11 +270,11 @@ display: inline-flex;
 }
 
 .work-grid--3 .work-item{
-  aspect-ratio: 4 / 3;
+  aspect-ratio: unset;
 }
 
 .work-grid--3 .work-item img{
-  height: 100%;
+  height: auto;
 }
 
 /* About */
