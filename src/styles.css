@@ -466,3 +466,9 @@ display: inline-flex;
 .home-support__logo--jfac{height:76px;}
 
 .home-support__logo--ribbon{height:27px;}
+
+
+/* Mobile: use swipe/tap navigation in viewer (hide arrow buttons) */
+@media (max-width: 720px){
+  .viewer__nav{ display: none; }
+}
