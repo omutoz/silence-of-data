@@ -61,6 +61,31 @@ export function renderHome({ lightbox }) {
 
   hint.addEventListener("click", () => smoothScrollTo(works));
 
-  main.append(intro, works);
+  const support = document.createElement("section");
+  support.className = "home-support";
+
+  const supportText = document.createElement("div");
+  supportText.className = "home-support__text";
+  supportText.textContent = t(siteData.home.supportedBy);
+
+  const logos = document.createElement("div");
+  logos.className = "home-support__logos";
+
+  const ribbon = document.createElement("img");
+  ribbon.className = "home-support__logo home-support__logo--ribbon";
+  ribbon.alt = "Ribbon";
+  ribbon.loading = "lazy";
+  ribbon.src = assetUrl("images/Ribbon_Logo.png");
+
+  const jfac = document.createElement("img");
+  jfac.className = "home-support__logo home-support__logo--jfac";
+  jfac.alt = "Jam Factory Art Center";
+  jfac.loading = "lazy";
+  jfac.src = assetUrl("images/Jfac_logo.png");
+
+  logos.append(ribbon, jfac);
+  support.append(supportText, logos);
+
+  main.append(intro, works, support);
   return main;
 }
