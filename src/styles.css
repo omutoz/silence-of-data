@@ -270,13 +270,11 @@ display: inline-flex;
 }
 
 .work-grid--3 .work-item{
-  /* aspect-ratio removed so frames hug actual image */
-  aspect-ratio: auto;
+  aspect-ratio: 4 / 3;
 }
 
 .work-grid--3 .work-item img{
-  height: auto;
-  object-fit: initial;
+  height: 100%;
 }
 
 /* About */
