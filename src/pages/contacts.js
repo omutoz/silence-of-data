@@ -27,12 +27,11 @@ export function renderContacts() {
   const spacer = document.createElement("div");
   spacer.style.height = "20px";
 
-  // Links list
+  // Links list (Behance + LinkedIn only)
   const list = document.createElement("ul");
   list.className = "contacts__list";
 
   const links = [
-    { label: "Texty.org.ua", href: "https://texty.org.ua/author/nadja-kelm/" },
     { label: "Behance", href: "https://www.behance.net/zhukkelm" },
     { label: "LinkedIn", href: "https://www.linkedin.com/in/nadja-kelm-1922772a1/" }
   ];
