@@ -23,8 +23,8 @@ export function createLightbox() {
     </div>
   `;
 
-  const img = root.querySelector(".viewer__img");
   const figure = root.querySelector(".viewer__figure");
+  const img = root.querySelector(".viewer__img");
   const closeBtn = root.querySelector(".viewer__close");
   const nextBtn = root.querySelector(".viewer__nav--next");
   const prevBtn = root.querySelector(".viewer__nav--prev");
@@ -32,58 +32,19 @@ export function createLightbox() {
   let images = [];
   let index = 0;
 
-  // mobile behaviors
-  let isMobile = false;
-  let isPanMode = false; // only for work #1 on mobile
-
-  // tap/swipe state
+  // swipe state
   let startX = 0;
   let startY = 0;
-  let pointerDown = false;
-  let didMove = false;
-
-  // pan state
-  let panStartX = 0;
-  let panStartOffset = 0;
-  let panOffset = 0;
-  let panMax = 0;
-
-  img.draggable = false;
-
-  function detectMobile() {
-    isMobile =
-      window.matchMedia?.("(pointer: coarse)").matches ||
-      window.innerWidth <= 900;
-  }
-
-  function isWork1List(list) {
-    const first = list?.[0] || "";
-    return first.includes("images/works/1/");
-  }
-
-  function clamp(n, min, max) {
-    return Math.max(min, Math.min(max, n));
-  }
-
-  function resetPan() {
-    panOffset = 0;
-    img.style.transform = "translateX(0px)";
-    panMax = 0;
-
-    // after image is rendered, compute bounds
-    requestAnimationFrame(() => {
-      const figRect = figure.getBoundingClientRect();
-      const imgRect = img.getBoundingClientRect();
-      const diff = imgRect.width - figRect.width;
-      panMax = diff > 0 ? diff / 2 : 0;
-    });
-  }
+  let lastX = 0;
+  let lastY = 0;
+  let tracking = false;
+  let suppressClickUntil = 0;
 
   function setImg(i) {
     if (!images.length) return;
     index = (i + images.length) % images.length;
-
     const src = assetUrl(images[index]);
+
     img.src = src;
     img.alt = `Image ${index + 1} of ${images.length}`;
 
@@ -91,29 +52,20 @@ export function createLightbox() {
       img.onerror = null;
       img.src = assetUrl("images/_placeholder.svg");
     };
-
-    if (isPanMode) resetPan();
   }
 
   function open({ list, startIndex = 0 }) {
     images = Array.isArray(list) ? list : [];
     if (!images.length) return;
 
-    detectMobile();
-    isPanMode = isMobile && isWork1List(images);
-    root.classList.toggle("is-pan", isPanMode);
-
     document.documentElement.classList.add("is-locked");
     root.classList.add("is-open");
     root.setAttribute("aria-hidden", "false");
-
     setImg(startIndex);
 
     closeBtn.focus({ preventScroll: true });
-    window.addEventListener("keydown", onKeyDown, { passive: false });
 
-    // Make sure mobile mode is correct on rotate/resize
-    window.addEventListener("resize", onResize, { passive: true });
+    window.addEventListener("keydown", onKeyDown, { passive: false });
   }
 
   function close() {
@@ -121,7 +73,6 @@ export function createLightbox() {
     root.setAttribute("aria-hidden", "true");
     document.documentElement.classList.remove("is-locked");
     window.removeEventListener("keydown", onKeyDown);
-    window.removeEventListener("resize", onResize);
   }
 
   function next() {
@@ -130,16 +81,6 @@ export function createLightbox() {
 
   function prev() {
     setImg(index - 1);
-  }
-
-  function onResize() {
-    const prevPan = isPanMode;
-    detectMobile();
-    isPanMode = isMobile && isWork1List(images);
-    root.classList.toggle("is-pan", isPanMode);
-
-    // if pan mode toggled on, recalc bounds
-    if (isPanMode && !prevPan) resetPan();
   }
 
   function onKeyDown(e) {
@@ -162,7 +103,7 @@ export function createLightbox() {
     }
   }
 
-  // Click outside closes
+  // close on backdrop
   root.addEventListener("click", (e) => {
     if (e.target === root) close();
   });
@@ -171,76 +112,74 @@ export function createLightbox() {
   nextBtn.addEventListener("click", next);
   prevBtn.addEventListener("click", prev);
 
-  // Mobile: tap-left/tap-right navigation (works everywhere)
-  // Mobile: swipe navigation (works for galleries except Work #1)
-  // Work #1 on mobile: drag pans image horizontally instead of swipe navigation.
-  figure.addEventListener("pointerdown", (e) => {
+  // Tap navigation (mobile-friendly):
+  // - tap left half => prev
+  // - tap right half => next
+  figure.addEventListener("click", (e) => {
     if (!root.classList.contains("is-open")) return;
-
-    pointerDown = true;
-    didMove = false;
-    startX = e.clientX;
-    startY = e.clientY;
-
-    if (isPanMode) {
-      panStartX = e.clientX;
-      panStartOffset = panOffset;
-    }
-
-    figure.setPointerCapture?.(e.pointerId);
-  });
-
-  figure.addEventListener("pointermove", (e) => {
-    if (!pointerDown) return;
-
-    const dx = e.clientX - startX;
-    const dy = e.clientY - startY;
-
-    if (Math.abs(dx) > 6 || Math.abs(dy) > 6) didMove = true;
-
-    if (isPanMode) {
-      // pan image horizontally
-      const panDx = e.clientX - panStartX;
-      const nextOffset = clamp(panStartOffset + panDx, -panMax, panMax);
-      panOffset = nextOffset;
-      img.style.transform = `translateX(${panOffset}px)`;
-      return;
-    }
-
-    // Not pan mode: treat horizontal swipe as navigation (only on mobile)
-    if (!isMobile) return;
-
-    if (Math.abs(dx) > 35 && Math.abs(dx) > Math.abs(dy) * 1.2) {
-      pointerDown = false;
-      if (dx < 0) next();
-      else prev();
-    }
-  });
-
-  figure.addEventListener("pointerup", (e) => {
-    if (!pointerDown) return;
-    pointerDown = false;
-
-    // tap navigation (only on mobile). If user dragged in pan mode, do nothing.
-    if (!isMobile) return;
-
-    // If it was a drag pan, ignore tap.
-    if (didMove && isPanMode) return;
-
-    // If it was a swipe nav, ignore tap.
-    if (didMove && !isPanMode) return;
+    if (Date.now() < suppressClickUntil) return;
+    // Ignore clicks on controls
+    if (e.target.closest(".viewer__close") || e.target.closest(".viewer__nav")) return;
 
     const rect = figure.getBoundingClientRect();
     const x = e.clientX - rect.left;
-    const isRight = x > rect.width / 2;
-
-    if (isRight) next();
-    else prev();
+    if (x < rect.width * 0.5) prev();
+    else next();
   });
 
-  figure.addEventListener("pointercancel", () => {
-    pointerDown = false;
-  });
+  // Swipe navigation (touch)
+  figure.addEventListener(
+    "touchstart",
+    (e) => {
+      if (!root.classList.contains("is-open")) return;
+      if (e.touches.length !== 1) return;
+
+      tracking = true;
+      startX = lastX = e.touches[0].clientX;
+      startY = lastY = e.touches[0].clientY;
+    },
+    { passive: true }
+  );
+
+  figure.addEventListener(
+    "touchmove",
+    (e) => {
+      if (!tracking) return;
+      if (e.touches.length !== 1) return;
+
+      lastX = e.touches[0].clientX;
+      lastY = e.touches[0].clientY;
+
+      const dx = lastX - startX;
+      const dy = lastY - startY;
+
+      // If the gesture is mostly horizontal, prevent page scrolling
+      if (Math.abs(dx) > 10 && Math.abs(dx) > Math.abs(dy)) {
+        e.preventDefault();
+      }
+    },
+    { passive: false }
+  );
+
+  figure.addEventListener(
+    "touchend",
+    () => {
+      if (!tracking) return;
+      tracking = false;
+
+      const dx = lastX - startX;
+      const dy = lastY - startY;
+
+      // horizontal swipe threshold
+      const SWIPE_PX = 48;
+      if (Math.abs(dx) >= SWIPE_PX && Math.abs(dx) > Math.abs(dy) * 1.2) {
+        suppressClickUntil = Date.now() + 400;
+        if (dx < 0) next();
+        else prev();
+      }
+    },
+    { passive: true }
+  );
 
   return { root, open, close };
 }
