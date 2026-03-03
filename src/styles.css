@@ -270,11 +270,13 @@ display: inline-flex;
 }
 
 .work-grid--3 .work-item{
-  aspect-ratio: 4 / 3;
+  /* aspect-ratio removed so frames hug actual image */
+  aspect-ratio: auto;
 }
 
 .work-grid--3 .work-item img{
-  height: 100%;
+  height: auto;
+  object-fit: initial;
 }
 
 /* About */
@@ -471,27 +473,4 @@ display: inline-flex;
 /* Mobile: use swipe/tap navigation in viewer (hide arrow buttons) */
 @media (max-width: 720px){
   .viewer__nav{ display: none; }
-}
-/* Mobile viewer improvements */
-@media (max-width: 900px) {
-  /* hide arrow buttons on mobile (tap/swipe instead) */
-  .viewer__nav { display: none; }
-}
-
-/* Work #1 mobile: full-height image + horizontal pan */
-.viewer.is-pan .viewer__figure{
-  height: 92vh;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.viewer.is-pan .viewer__img{
-  height: 92vh;
-  width: auto;
-  max-width: none;
-  max-height: none;
-  touch-action: pan-y;
-  will-change: transform;
 }
