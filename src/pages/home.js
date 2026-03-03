@@ -18,7 +18,6 @@ export function renderHome({ lightbox }) {
   hint.type = "button";
   hint.className = "home-intro__hint";
   hint.innerHTML = `<div class="home-intro__hintText"></div><div class="home-intro__arrow">↓</div>`;
-
   hint.querySelector(".home-intro__hintText").textContent = t(siteData.home.scrollHint);
 
   intro.append(p, hint);
@@ -61,31 +60,38 @@ export function renderHome({ lightbox }) {
 
   hint.addEventListener("click", () => smoothScrollTo(works));
 
-  const support = document.createElement("section");
-  support.className = "home-support";
+  main.append(intro, works);
 
-  const supportText = document.createElement("div");
-  supportText.className = "home-support__text";
-  supportText.textContent = t(siteData.home.supportedBy);
+  // Support block (text + logos)
+  if (siteData.home.supportText && Array.isArray(siteData.home.supportLogos) && siteData.home.supportLogos.length) {
+    const support = document.createElement("section");
+    support.className = "home-support";
 
-  const logos = document.createElement("div");
-  logos.className = "home-support__logos";
+    const supportText = document.createElement("p");
+    supportText.className = "home-support__text";
+    supportText.textContent = t(siteData.home.supportText);
 
-  const ribbon = document.createElement("img");
-  ribbon.className = "home-support__logo home-support__logo--ribbon";
-  ribbon.alt = "Ribbon";
-  ribbon.loading = "lazy";
-  ribbon.src = assetUrl("images/Ribbon_Logo.png");
+    const logos = document.createElement("div");
+    logos.className = "home-support__logos";
 
-  const jfac = document.createElement("img");
-  jfac.className = "home-support__logo home-support__logo--jfac";
-  jfac.alt = "Jam Factory Art Center";
-  jfac.loading = "lazy";
-  jfac.src = assetUrl("images/Jfac_logo.png");
+    siteData.home.supportLogos.forEach((l) => {
+      const img = document.createElement("img");
+      const alt = (l.alt || "").toLowerCase();
+      let cls = "home-support__logo";
+      if (alt.includes("ribbon")) cls += " home-support__logo--ribbon";
+      if (alt.includes("jam") || alt.includes("factory") || alt.includes("jfac")) cls += " home-support__logo--jfac";
 
-  logos.append(ribbon, jfac);
-  support.append(supportText, logos);
+      img.className = cls;
+      img.alt = l.alt || "";
+      img.loading = "lazy";
+      img.src = assetUrl(l.src);
 
-  main.append(intro, works, support);
+      logos.append(img);
+    });
+
+    support.append(supportText, logos);
+    main.append(support);
+  }
+
   return main;
 }
