@@ -52,7 +52,7 @@ This project is a reflection on creativity in conditions of absolute silence: ca
       id: "2",
       label: "№2",
       thumb: "images/Thumbnail_№2.jpg",
-      images: Array.from({ length: 9 }, (_, i) => `images/works/2/№2_${String(i + 1).padStart(2, "0")}.jpg`)
+      images: Array.from({ length: 8 }, (_, i) => `images/works/2/№2_${String(i + 2).padStart(2, "0")}.jpg`)
     },
     {
       id: "3",
