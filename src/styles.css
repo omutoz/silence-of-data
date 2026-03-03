@@ -472,3 +472,26 @@ display: inline-flex;
 @media (max-width: 720px){
   .viewer__nav{ display: none; }
 }
+/* Mobile viewer improvements */
+@media (max-width: 900px) {
+  /* hide arrow buttons on mobile (tap/swipe instead) */
+  .viewer__nav { display: none; }
+}
+
+/* Work #1 mobile: full-height image + horizontal pan */
+.viewer.is-pan .viewer__figure{
+  height: 92vh;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.viewer.is-pan .viewer__img{
+  height: 92vh;
+  width: auto;
+  max-width: none;
+  max-height: none;
+  touch-action: pan-y;
+  will-change: transform;
+}
