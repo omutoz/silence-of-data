@@ -16,11 +16,12 @@ export const siteData = {
 Чим більше спливає часу, тим важче залишатися у її фокусі.
 Просто ігнорувати таку катастрофу неможливо, говорити на інші теми — несуттєво.
 Цей проєкт є міркуванням про творчість в умовах абсолютного мовчання, чи можемо ми висловити те, що нам не хочеться ні про що говорити, і чи має це цінність як своєрідне свідчення?`,
-      en: `Ukraine found itself in a situation of terror, not only physical but also ideological.
-The topic of war has effectively supplanted all others in intellectual and creative practices.
-The more time passes, the harder it is to stay focused on it.
-It is impossible to simply ignore such a catastrophe, and talking about other topics is irrelevant.
-This project is a reflection on creativity in conditions of absolute silence: can we express what we do not want to talk about, and does it have value as a kind of testimony?`
+      en: `Ukraine has found itself in a state of terror — not only physical, but ideological.
+The topic of war has effectively supplanted all others in intellectual and creative practice.
+As time passes, it becomes increasingly difficult to remain focused on it.
+On the one hand, it is impossible to ignore such a catastrophe. On the other, speaking about anything else feels irrelevant.
+This project reflects on creativity under conditions of absolute silence:
+Can we express the feeling of not wanting to speak and does it have value as a kind of testimony?`
     },
     scrollHint: {
       ua: "Роботи",
