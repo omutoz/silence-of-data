@@ -1,16 +1,8 @@
 @font-face{
-  font-family: "Montserrat-Regular";
-  src: url("/fonts/Montserrat-Regular.ttf") format("truetype");
-  font-weight: 400;
+  font-family: "Montserrat-Bold";
+  src: url("/fonts/Montserrat-Bold.ttf") format("truetype");
+  font-weight: 700;
   font-style: normal;
-  font-display: swap;
-}
-
-@font-face{
-  font-family: "Montserrat-LightItalic";
-  src: url("/fonts/Montserrat-LightItalic.ttf") format("truetype");
-  font-weight: 300;
-  font-style: italic;
   font-display: swap;
 }
 
@@ -33,7 +25,7 @@
 html,body{ height:100%; }
 body{
   margin:0;
-  font-family: "Montserrat-Regular", Arial, sans-serif;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
   color: var(--text);
   background: var(--bg);
 }
@@ -44,13 +36,6 @@ body{
 
 #app{
   min-height: 100%;
-}
-
-button,
-input,
-textarea,
-select{
-  font-family: "Montserrat-Regular", Arial, sans-serif;
 }
 
 /* link-like buttons */
@@ -74,7 +59,7 @@ select{
 }
 
 .linklike.is-active{
-  font-weight: 400;
+  font-weight: 600;
 }
 
 /* Header (centered title, left language, right nav) */
@@ -95,8 +80,6 @@ select{
   justify-self: start;
   font-size: 14px;
   letter-spacing: 0.04em;
-
-  font-family: "Montserrat-Regular", Arial, sans-serif;
 }
 
 .site-header__right{
@@ -104,8 +87,6 @@ select{
   font-size: 14px;
   letter-spacing: 0.04em;
   white-space: nowrap;
-
-  font-family: "Montserrat-Regular", Arial, sans-serif;
 }
 
 .site-title{
@@ -113,11 +94,9 @@ select{
   font-size: 14px;
   letter-spacing: 0.10em;
   text-transform: uppercase;
-  font-weight: 400;
+  font-weight: 600;
   text-decoration: none;
   color: inherit;
-
-  font-family: "Montserrat-Regular", Arial, sans-serif;
 }
 
 .site-title:focus-visible{
@@ -171,11 +150,9 @@ display: inline-flex;
 }
 
 .home-intro__hintText{
-  font-family: "Montserrat-LightItalic", Arial, sans-serif;
   font-size: 12px;
-  font-weight: 300;
-  font-style: normal;
   color: var(--muted);
+  font-style: italic;
   white-space: pre-line;
 }
 
@@ -216,8 +193,6 @@ display: inline-flex;
   text-align: center;
   font-size: 14px;
   letter-spacing: 0.06em;
-
-  font-family: "Montserrat-Regular", Arial, sans-serif;
 }
 
 /* Work page */
@@ -232,8 +207,6 @@ display: inline-flex;
   display: inline-block;
   font-size: 14px;
   letter-spacing: 0.06em;
-
-  font-family: "Montserrat-Regular", Arial, sans-serif;
 }
 
 .work-grid{
@@ -305,13 +278,11 @@ display: inline-flex;
 }
 
 .work-grid--3 .work-item{
-  /* aspect-ratio removed so frames hug actual image */
-  aspect-ratio: auto;
+  aspect-ratio: 4 / 3;
 }
 
 .work-grid--3 .work-item img{
-  height: auto;
-  object-fit: initial;
+  height: 100%;
 }
 
 /* About */
@@ -482,19 +453,17 @@ display: inline-flex;
   padding: 0 var(--pad);
 }
 .home-support__text{
-  font-family: "Montserrat-LightItalic", Arial, sans-serif;
-  font-size: 12px;
-  font-weight: 300;
-  font-style: normal;
+  font-size: 14px;
+  font-style: italic;
   line-height: 1.35;
-  color: var(--muted);
-  margin: 0 0 12px;
+  color: rgba(0,0,0,0.55);
+  margin: 0 0 22px;
 }
 .home-support__logos{
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 24px;
+  gap: 42px;
   flex-wrap: wrap;
 }
 .home-support__logo{
@@ -505,9 +474,3 @@ display: inline-flex;
 .home-support__logo--jfac{height:76px;}
 
 .home-support__logo--ribbon{height:27px;}
-
-
-/* Mobile: use swipe/tap navigation in viewer (hide arrow buttons) */
-@media (max-width: 720px){
-  .viewer__nav{ display: none; }
-}
