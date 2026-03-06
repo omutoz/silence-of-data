@@ -1,8 +1,24 @@
 @font-face{
+  font-family: "Montserrat-Regular";
+  src: url("/fonts/Montserrat-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face{
   font-family: "Montserrat-Bold";
   src: url("/fonts/Montserrat-Bold.ttf") format("truetype");
   font-weight: 700;
   font-style: normal;
+  font-display: swap;
+}
+
+@font-face{
+  font-family: "Montserrat-LightItalic";
+  src: url("/fonts/Montserrat-LightItalic.ttf") format("truetype");
+  font-weight: 300;
+  font-style: italic;
   font-display: swap;
 }
 
@@ -25,7 +41,7 @@
 html,body{ height:100%; }
 body{
   margin:0;
-  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  font-family: "Montserrat-Regular", Arial, sans-serif;
   color: var(--text);
   background: var(--bg);
 }
@@ -36,6 +52,13 @@ body{
 
 #app{
   min-height: 100%;
+}
+
+button,
+input,
+textarea,
+select{
+  font-family: "Montserrat-Regular", Arial, sans-serif;
 }
 
 /* link-like buttons */
@@ -59,7 +82,8 @@ body{
 }
 
 .linklike.is-active{
-  font-weight: 600;
+  font-family: "Montserrat-Bold", "Montserrat-Regular", Arial, sans-serif;
+  font-weight: 700;
 }
 
 /* Header (centered title, left language, right nav) */
@@ -94,7 +118,8 @@ body{
   font-size: 14px;
   letter-spacing: 0.10em;
   text-transform: uppercase;
-  font-weight: 600;
+  font-family: "Montserrat-Bold", "Montserrat-Regular", Arial, sans-serif;
+  font-weight: 700;
   text-decoration: none;
   color: inherit;
 }
@@ -150,9 +175,10 @@ display: inline-flex;
 }
 
 .home-intro__hintText{
+  font-family: "Montserrat-LightItalic", Arial, sans-serif;
   font-size: 12px;
   color: var(--muted);
-  font-style: italic;
+  font-style: normal;
   white-space: pre-line;
 }
 
@@ -453,11 +479,12 @@ display: inline-flex;
   padding: 0 var(--pad);
 }
 .home-support__text{
-  font-size: 14px;
-  font-style: italic;
+  font-family: "Montserrat-LightItalic", Arial, sans-serif;
+  font-size: 12px;
+  font-style: normal;
+  color: var(--muted);
   line-height: 1.35;
-  color: rgba(0,0,0,0.55);
-  margin: 0 0 22px;
+  margin: 0 0 12px;
 }
 .home-support__logos{
   display: flex;
@@ -471,6 +498,6 @@ display: inline-flex;
   width: auto;
   display: block;
 }
-.home-support__logo--jfac{height:76px;}
+.home-support__logo--jfac{height:69px;}
 
-.home-support__logo--ribbon{height:27px;}
+.home-support__logo--ribbon{height:32px;}
