@@ -48,7 +48,7 @@ export const siteData = {
       id: "1",
       label: "№1",
       thumb: "images/Thumbnail_№1.jpg",
-      images: Array.from({ length: 8 }, (_, i) => `images/works/1/№1_${String(i + 1).padStart(2, "0")}.jpg`)
+      images: Array.from({ length: 9 }, (_, i) => `images/works/1/№1_${String(i + 1).padStart(2, "0")}.jpg`)
     },
     {
       id: "2",
